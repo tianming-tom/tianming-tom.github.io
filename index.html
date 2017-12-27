@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>简历编辑器</title>
-<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-</head>
-<body>
-	<div style="text-align: right;">
-		<input type="text" placeholder="登录名"> 
-		<input type="text" placeholder="登录密码">
-	</div>
-	<div style="width: 1000px;height: 800px;margin: 0 auto;background-color: gray;">
-		<h4 style="color: black;">简历编辑器</h4>
-		<div style="text-align: center;line-height: 400px;">
-			<p style="color: green;">开始编辑</p>
+
+	<head>
+		<meta charset="utf-8">
+		<title>简历编辑器</title>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/layer-v3.0.3/layer/layer.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="header" style="text-align: right;margin: 15px;">
+			<button class="btn-success" onclick="login()">登陆</button>
+			<button class="btn-success" onclick="register()">注册</button>
 		</div>
-	</div>
-</body>
+		<script type="text/javascript">
+			
+			function login(){
+				layer.open({
+					title: "登陆",
+					type: 1,
+					anim: 5,
+					area:['300px','250px'],
+					content: "<div style='margin:15px;'><div><span>账号：</span><input class='login' type='text' placeholder='请输入账号'></div>" +
+						"<div><span>密码：</span><input class='register' type='password' placeholder='请输入密码'></div></div>",
+					btn: ['登陆', '重置'],
+					btn1: function(index, layero) {
+
+					},
+					btn2: function(index, layero) {
+
+					}
+				})
+			}
+		</script>
+	</body>
+
 </html>
