@@ -2,39 +2,64 @@
 <html>
 
 	<head>
-		<meta charset="utf-8">
-		<title>简历编辑器</title>
-		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="js/vue.js"></script>
-		<script type="text/javascript" src="js/layer-v3.0.3/layer/layer.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<meta charset="UTF-8">
+		<title>待办事项</title>
+		<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+		<script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+		<script src="js/app.js"></script>
 	</head>
 
 	<body>
-		<div id="header" style="text-align: right;margin: 15px;">
-			<button class="btn-success" onclick="login()">登陆</button>
-			<button class="btn-success" onclick="register()">注册</button>
+		<div id="app" v-cloak>
+			<section id="signInAndSignUp" v-if="!currentUser">
+				<div>
+					<label><input type="radio" v-model="actionType" value="signUp"/>注册</label>
+					<label><input type="radio" v-model="actionType" value="login"/>登陆</label>
+				</div>
+				<div class="signUp" v-if="actionType == 'signUp'">
+					<form @submit.prevent="signUp">
+						<div class="formRow">
+							账号：<input type="text" v-model="formData.username" />
+						</div>
+						<div class="formRow">
+							密码：<input type="password" v-model="formData.password" />
+						</div>
+						<div class="formActions">
+							<input type="submit" value="注册" />
+						</div>
+					</form>
+				</div>
+				<div class="login" v-if="actionType == 'login'">
+					<form @submit.prevent="login">
+						<div class="formRow">
+							账号：<input type="text" v-model="formData.username" />
+						</div>
+						<div class="formRow">
+							密码：<input type="password" v-model="formData.password" />
+						</div>
+						<div class="formActions">
+							<input type="submit" value="登陆" />
+						</div>
+					</form>
+				</div>
+			</section>
+			<section id="todo" v-if="currentUser">
+				<span>账号：{{currentUser.username}}</span>
+				<button @click="logout">退出登录</button>
+				<div class="newTask">
+					<input type="text" v-model="newTodo" @keypress.enter="addTodo">
+				</div>
+				<ol class="todos">
+					<li v-for="todo in todoList">
+						<input type="checkbox" v-model="todo.done" @click="updateTodos"> {{todo.title}}
+						<span v-if="todo.done">已完成</span>
+						<span v-else>未完成</span>
+						<button @click="removeTodo(todo)">X</button>
+					</li>
+				</ol>
 		</div>
-		<script type="text/javascript">
-			
-			function login(){
-				layer.open({
-					title: "登陆",
-					type: 1,
-					anim: 5,
-					area:['300px','250px'],
-					content: "<div style='margin:15px;'><div><span>账号：</span><input class='login' type='text' placeholder='请输入账号'></div>" +
-						"<div><span>密码：</span><input class='register' type='password' placeholder='请输入密码'></div></div>",
-					btn: ['登陆', '重置'],
-					btn1: function(index, layero) {
-
-					},
-					btn2: function(index, layero) {
-
-					}
-				})
-			}
-		</script>
+		</section>
+		
 	</body>
 
 </html>
